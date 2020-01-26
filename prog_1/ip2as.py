@@ -120,7 +120,7 @@ def main():
     iplist = pd.read_csv(iplist_file, sep=" ", header=None).values
     df.columns = ["Prefix", "Prefix_length", "AS"]
     out = iplist_convert(iplist, df)
-    out.to_csv('out.txt', sep=' ', index = False, header=False)
+    out.to_csv('student_output.txt', sep=' ', index = False, header=False)
 
 main()
 
