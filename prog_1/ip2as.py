@@ -60,23 +60,15 @@ def distance_match(input_string, df_bestmatch):
                                    potential candidates
                Returns:
                       output_df:  Row in dataframe with the best match 
-    """
-    clean_input = clean_prefix(input_string)
-    int_bestmatch = np.array(list(map(clean_prefix, df_bestmatch.Prefix.values.tolist())))
-    dist = int_bestmatch - clean_input
-    idx = np.where(dist == min(dist))[0]
-    if (len(idx) == 1):
-        return df_bestmatch[idx].reset_index(drop=True)
-    else:
-        df_bestmatch = df_bestmatch.iloc[idx,:]
-        temp = []
-        for prefix, prefix_length in zip(df_bestmatch.Prefix, df_bestmatch.Prefix_length):
-            temp.append(prefix + "/" + str(prefix_length))
-        df_bestmatch["Prefix_full"] = temp
-        prefix_list = df_bestmatch.Prefix_full.tolist()
-        df_bestmatch = df_bestmatch[[isIn(p, input_string) for p in prefix_list]].reset_index(drop = True)
-        best_prefix = df_bestmatch.Prefix_length.idxmax()
-        return df_bestmatch.iloc[best_prefix:best_prefix+1].reset_index(drop = True)
+    """ 
+    temp = []
+    for prefix, prefix_length in zip(df_bestmatch.Prefix, df_bestmatch.Prefix_length):
+        temp.append(prefix + "/" + str(prefix_length))
+    df_bestmatch["Prefix_full"] = temp
+    prefix_list = df_bestmatch.Prefix_full.tolist()
+    df_bestmatch = df_bestmatch[[isIn(p, input_string) for p in prefix_list]].reset_index(drop = True)
+    best_prefix = df_bestmatch.Prefix_length.idxmax()
+    return df_bestmatch.iloc[best_prefix:best_prefix+1].reset_index(drop = True)
         
 def convert_ip(ip):
     return '.'.join([bin(int(x)+256)[3:] for x in ip.split('.')])
