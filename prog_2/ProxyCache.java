@@ -8,8 +8,8 @@
 import java.net.*;
 import java.io.*;
 import java.util.*;
-import HttpRequest;
-import HttpResponse;
+
+
 
 public class ProxyCache {
     /** Port for the proxy */
@@ -39,8 +39,8 @@ public class ProxyCache {
 
 	/* Read request */
 	try {
-	    BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream()))/* Fill in */;
-	    request =  HttpRequest(fromClient);/* Fill in */;
+		BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream()))/* Fill in */;
+	    request =  new HttpRequest(fromClient);/* Fill in */;
 	} catch (IOException e) {
 	    System.out.println("Error reading request from client: " + e);
 	    return;
@@ -102,6 +102,7 @@ public class ProxyCache {
 	while (true) {
 	    try {
 		client = socket.accept();
+		
 		handle(client);
 	    } catch (IOException e) {
 		System.out.println("Error reading request from client: " + e);
