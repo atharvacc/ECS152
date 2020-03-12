@@ -64,9 +64,20 @@ public class ProxyCache {
 	try {
 	    DataInputStream fromServer = new DataInputStream(server.getInputStream());/* Fill in */;
 	    response =  new HttpResponse(fromServer)/* Fill in */;
-        DataOutputStream toClient =  new DataOutputStream(client.getOutputStream());/* Fill in */;
-        toClient.writeBytes(response.toString());
-	    toClient.write(response.body);
+		DataOutputStream toClient =  new DataOutputStream(client.getOutputStream());/* Fill in */;
+
+		//Replace body
+		
+		String str = new String(response.body);
+		str = str.replace("Computer", "DaddyWHO");
+		str = str.replace("/personnel/towsley.html" , "https://www.facebook.com");
+		str = str.replace("University of Massachusetts, Amherst", "UC DAVIS ROXXXXXX");
+		byte[] new_body = str.getBytes() ;
+		
+
+		toClient.writeBytes(response.toString());
+		toClient.write(new_body);
+	    //toClient.write(response.body);
 	    /* Fill in */
 	    /* Write response to client. First headers, then body */
 	    client.close();

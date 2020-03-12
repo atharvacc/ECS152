@@ -38,7 +38,7 @@ public class HttpRequest {
 
     System.out.println("URI is: " + URI);
     System.out.println("version is: " + version);
-
+	
 	if (!method.equals("GET")) {
 	    System.out.println("Error: Method not GET");
 	}

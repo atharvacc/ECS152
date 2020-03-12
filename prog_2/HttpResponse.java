@@ -32,7 +32,7 @@ public class HttpResponse {
 
 	/* First read status line and response headers */
 	try {
-	    String line = fromServer.readLine()/* Fill in */;
+	    String line = fromServer.readLine() ; /* Fill in */
 	    while (line.length() != 0) {
 		if (!gotStatusLine) {
 		    statusLine = line;
@@ -41,12 +41,18 @@ public class HttpResponse {
 		    headers += line + CRLF;
 		}
 
+		// Error handling for 404 code not found
+		if (line.startsWith("HTTP/1.1") && line.contains("404") ){
+			System.out.println("404 Error, cannot process");
+			return;
+		}
 		/* Get length of content as indicated by
 		 * Content-Length header. Unfortunately this is not
 		 * present in every response. Some servers return the
 		 * header "Content-Length", others return
 		 * "Content-length". You need to check for both
 		 * here. */
+		
 		if (line.startsWith("Content-Length") ||
 		    line.startsWith("Content-length")) {
 		    String[] tmp = line.split(" ");
